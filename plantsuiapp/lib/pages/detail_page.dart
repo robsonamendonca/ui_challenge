@@ -1,8 +1,9 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
+// ignore_for_file: no_leading_underscores_for_local_identifiers, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
 import 'package:plantsuiapp/constants.dart';
 import 'package:plantsuiapp/models/plant-model.dart';
+import 'package:plantsuiapp/pages/cart_page.dart';
 
 class DetailPage extends StatefulWidget {
   final int plantId;
@@ -28,6 +29,7 @@ class _DetailPageState extends State<DetailPage> {
     Size size = MediaQuery.of(context).size;
     List<PlantModel> _plantList = PlantModel.plantList;
     return Scaffold(
+      backgroundColor: Constants.blackColor,
       body: Stack(
         children: [
           Positioned(
@@ -46,10 +48,10 @@ class _DetailPageState extends State<DetailPage> {
                     width: 40,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
-                      color: Constants.primaryColor.withOpacity(.15),
+                      color: Constants.blackColor.withOpacity(.15),
                     ),
                     child: Icon(
-                      Icons.close,
+                      Icons.arrow_back_ios,
                       color: Constants.primaryColor,
                     ),
                   ),
@@ -63,21 +65,20 @@ class _DetailPageState extends State<DetailPage> {
                     width: 40,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
-                      color: Constants.primaryColor.withOpacity(.15),
+                      color: Constants.blackColor.withOpacity(.15),
                     ),
                     child: IconButton(
                         onPressed: () {
-                          setState(() {
-                            bool isFavorited = toggleIsFavorated(
-                                _plantList[widget.plantId].isFavorated);
-                            _plantList[widget.plantId].isFavorated =
-                                isFavorited;
-                          });
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const CartPage(
+                                        addedToCartPlantModels: [],
+                                        addedToCartPlants: [],
+                                      )));
                         },
                         icon: Icon(
-                          _plantList[widget.plantId].isFavorated == true
-                              ? Icons.favorite
-                              : Icons.favorite_border,
+                          Icons.shopping_cart_outlined,
                           color: Constants.primaryColor,
                         )),
                   ),
@@ -86,7 +87,7 @@ class _DetailPageState extends State<DetailPage> {
             ),
           ),
           Positioned(
-            top: 100,
+            top: 60,
             left: 20,
             right: 20,
             child: Container(
@@ -96,38 +97,58 @@ class _DetailPageState extends State<DetailPage> {
               child: Stack(
                 children: [
                   Positioned(
-                    top: 10,
+                    top: 1,
                     left: 0,
                     child: SizedBox(
                       height: 350,
                       child: Image.asset(_plantList[widget.plantId].imageURL),
                     ),
                   ),
-                  Positioned(
-                    top: 10,
-                    right: 0,
-                    child: SizedBox(
-                      height: 200,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          PlantFeature(
-                            title: 'Size',
-                            plantFeature: _plantList[widget.plantId].size,
+                  Container(
+                    padding:
+                        const EdgeInsets.only(top: 360, left: 5, right: 30),
+                    height: size.height * .6,
+                    width: size.width,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  _plantList[widget.plantId].plantName,
+                                  style: TextStyle(
+                                    color: Constants.primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 28.0,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5.0,
+                        ),
+                        Expanded(
+                          child: Text(
+                            _plantList[widget.plantId].decription,
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                              height: 1.5,
+                              fontSize: 14,
+                              color: Constants.primaryColor.withOpacity(.7),
+                            ),
                           ),
-                          PlantFeature(
-                            title: 'Humidity',
-                            plantFeature:
-                                _plantList[widget.plantId].humidity.toString(),
-                          ),
-                          PlantFeature(
-                            title: 'Temperature',
-                            plantFeature:
-                                _plantList[widget.plantId].temperature,
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -139,80 +160,44 @@ class _DetailPageState extends State<DetailPage> {
             left: 0,
             right: 0,
             child: Container(
-              padding: const EdgeInsets.only(top: 80, left: 30, right: 30),
-              height: size.height * .5,
+              padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
+              height: size.height * .3,
               width: size.width,
               decoration: BoxDecoration(
-                color: Constants.primaryColor.withOpacity(.4),
+                color: Constants.blackColor6,
                 borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(30),
                   topLeft: Radius.circular(30),
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+              child: Positioned(
+                top: 10,
+                right: 0,
+                child: SizedBox(
+                  height: 200,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            _plantList[widget.plantId].plantName,
-                            style: TextStyle(
-                              color: Constants.primaryColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30.0,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            r'$' + _plantList[widget.plantId].price.toString(),
-                            style: TextStyle(
-                              color: Constants.blackColor,
-                              fontSize: 24.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
+                      PlantFeature(
+                        title: 'Height',
+                        plantFeature: _plantList[widget.plantId].size,
+                        icon: Icons.read_more,
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            _plantList[widget.plantId].rating.toString(),
-                            style: TextStyle(
-                              fontSize: 30.0,
-                              color: Constants.primaryColor,
-                            ),
-                          ),
-                          Icon(
-                            Icons.star,
-                            size: 30.0,
-                            color: Constants.primaryColor,
-                          ),
-                        ],
+                      PlantFeature(
+                        title: 'Temperature',
+                        plantFeature: _plantList[widget.plantId].temperature,
+                        icon: Icons.thermostat,
+                      ),
+                      PlantFeature(
+                        title: 'Humidity',
+                        plantFeature:
+                            _plantList[widget.plantId].humidity.toString(),
+                        icon: Icons.format_color_fill,
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 5.0,
-                  ),
-                  Expanded(
-                    child: Text(
-                      _plantList[widget.plantId].decription,
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(
-                        height: 1.5,
-                        fontSize: 18,
-                        color: Constants.blackColor.withOpacity(.7),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),
@@ -220,58 +205,52 @@ class _DetailPageState extends State<DetailPage> {
       ),
       floatingActionButton: SizedBox(
         width: size.width * .9,
-        height: 50,
+        height: 100,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(
-                  color: _plantList[widget.plantId].isSelected == true
-                      ? Constants.primaryColor.withOpacity(.5)
-                      : Colors.white,
-                  borderRadius: BorderRadius.circular(50),
-                  boxShadow: [
-                    BoxShadow(
-                      offset: const Offset(0, 1),
-                      blurRadius: 5,
-                      color: Constants.primaryColor.withOpacity(.3),
+              height: 60,
+              width: 150,
+              alignment: Alignment.bottomLeft,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Total Price',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22.0,
                     ),
-                  ]),
-              child: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      bool isSelected = toggleIsSelected(
-                          _plantList[widget.plantId].isSelected);
-
-                      _plantList[widget.plantId].isSelected = isSelected;
-                    });
-                  },
-                  icon: Icon(
-                    Icons.shopping_cart,
-                    color: _plantList[widget.plantId].isSelected == true
-                        ? Colors.white
-                        : Constants.primaryColor,
-                  )),
+                  ),
+                  Text(
+                    r'$' + _plantList[widget.plantId].price.toString(),
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 25.0,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(
-              width: 20,
+              width: 10,
             ),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                    color: Constants.primaryColor,
-                    borderRadius: BorderRadius.circular(10),
+                    color: Constants.blackColor3.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(30),
                     boxShadow: [
                       BoxShadow(
                         offset: const Offset(0, 1),
                         blurRadius: 5,
-                        color: Constants.primaryColor.withOpacity(.3),
+                        color: Constants.blackColor3.withOpacity(0.1),
                       )
                     ]),
                 child: const Center(
                   child: Text(
-                    'BUY NOW',
+                    'Add to Cart',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.0,
@@ -290,29 +269,39 @@ class _DetailPageState extends State<DetailPage> {
 class PlantFeature extends StatelessWidget {
   final String plantFeature;
   final String title;
+  final IconData icon;
   const PlantFeature({
     Key? key,
     required this.plantFeature,
     required this.title,
+    required this.icon,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        IconButton(
+          icon: Icon(
+            icon,
+            color: Constants.blackColor,
+            size: 40,
+          ),
+          onPressed: () {},
+        ),
         Text(
           title,
           style: TextStyle(
             color: Constants.blackColor,
+            fontWeight: FontWeight.bold,
           ),
         ),
         Text(
           plantFeature,
           style: TextStyle(
-            color: Constants.primaryColor,
+            color: Constants.blackColor,
             fontSize: 18.0,
-            fontWeight: FontWeight.bold,
           ),
         )
       ],

@@ -120,7 +120,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       left: 0,
       child: Center(
         child: Container(
-          padding: const EdgeInsets.all(33),
+          padding: const EdgeInsets.all(25),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: Constants.blackColor6,
@@ -151,7 +151,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               },
               icon: const Icon(
                 Icons.arrow_forward,
-                size: 52,
+                size: 30,
                 color: Colors.white,
               ),
             ),
@@ -180,7 +180,7 @@ class createPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            height: 480,
+            height: 300,
             child: Image.asset(image),
           ),
           const SizedBox(
