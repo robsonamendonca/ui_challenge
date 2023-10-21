@@ -76,11 +76,11 @@ class _HomePageState extends State<HomePage> {
                           child: Stack(
                             children: [
                               Positioned(
-                                top: 12,
-                                right: 25,
+                                top: 218,
+                                right: 15,
                                 child: Container(
-                                  height: 40,
-                                  width: 40,
+                                  height: 28,
+                                  width: 28,
                                   decoration: BoxDecoration(
                                     color: Colors.black,
                                     borderRadius: BorderRadius.circular(50),
@@ -100,58 +100,51 @@ class _HomePageState extends State<HomePage> {
                                           : Icons.favorite_border,
                                       color: Colors.white,
                                     ),
-                                    iconSize: 25,
+                                    iconSize: 14,
                                   ),
                                 ),
                               ),
                               Positioned(
-                                left: 50,
-                                right: 50,
-                                top: 50,
-                                bottom: 50,
-                                child: Image.asset(_plantList[index].imageURL),
+                                left: 30,
+                                right: 30,
+                                top: 10,
+                                bottom: 80,
+                                child: Image.asset(
+                                  _plantList[index].imageURL,
+                                  height: 120,
+                                ),
                               ),
                               Positioned(
-                                bottom: 15,
+                                bottom: 65,
                                 left: 20,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      _plantList[index].category,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    Text(
                                       _plantList[index].plantName,
                                       style: const TextStyle(
                                         color: Colors.black,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
                               Positioned(
-                                bottom: 15,
-                                right: 20,
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 2),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Text(
-                                    '\$${_plantList[index].price}',
-                                    style: TextStyle(
-                                      color: Constants.primaryColor,
-                                      fontSize: 16,
+                                bottom: 20,
+                                left: 20,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '\$${_plantList[index].price}',
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
                               ),
                             ],
@@ -240,8 +233,8 @@ Container _searchField() {
           filled: true,
           fillColor: Colors.white,
           contentPadding: const EdgeInsets.all(15),
-          hintText: 'Search Pancake',
-          hintStyle: const TextStyle(color: Color(0xffDDDADA), fontSize: 14),
+          hintText: 'Search...',
+          hintStyle: TextStyle(color: Constants.primaryColor, fontSize: 14),
           prefixIcon: Padding(
             padding: const EdgeInsets.all(12),
             child: IconButton(
@@ -255,8 +248,8 @@ Container _searchField() {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  const VerticalDivider(
-                    color: Colors.black,
+                  VerticalDivider(
+                    color: Constants.primaryColor,
                     indent: 10,
                     endIndent: 10,
                     thickness: 0.1,
@@ -264,7 +257,7 @@ Container _searchField() {
                   Padding(
                     padding: const EdgeInsets.all(12),
                     child: IconButton(
-                      icon: const Icon(Icons.sort_rounded),
+                      icon: const Icon(Icons.tune),
                       onPressed: () => {},
                     ),
                   ),
