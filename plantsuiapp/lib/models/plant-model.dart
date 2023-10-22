@@ -2,7 +2,7 @@
 
 class PlantModel {
   final int plantId;
-  final int price;
+  final double price;
   final String size;
   final double rating;
   final int humidity;
@@ -32,9 +32,9 @@ class PlantModel {
   static List<PlantModel> plantList = [
     PlantModel(
         plantId: 0,
-        price: 22,
+        price: 12.99,
         category: 'Indoor',
-        plantName: 'Sanseviera',
+        plantName: 'Snoke Plants',
         size: 'Small',
         rating: 4.5,
         humidity: 34,
@@ -47,9 +47,9 @@ class PlantModel {
         isSelected: false),
     PlantModel(
         plantId: 1,
-        price: 11,
+        price: 12.99,
         category: 'Outdoor',
-        plantName: 'Philodendron',
+        plantName: 'Lucy Jade Plant',
         size: 'Medium',
         rating: 4.8,
         humidity: 56,
@@ -62,9 +62,9 @@ class PlantModel {
         isSelected: false),
     PlantModel(
         plantId: 2,
-        price: 18,
+        price: 12.99,
         category: 'Indoor',
-        plantName: 'Beach Daisy',
+        plantName: 'Peperomia Plant',
         size: 'Large',
         rating: 4.7,
         humidity: 34,
@@ -137,9 +137,9 @@ class PlantModel {
         isSelected: false),
     PlantModel(
         plantId: 7,
-        price: 23,
+        price: 12.99,
         category: 'Garden',
-        plantName: 'Tritonia',
+        plantName: 'Small Plant',
         size: 'Medium',
         rating: 4.5,
         humidity: 34,
@@ -164,6 +164,48 @@ class PlantModel {
         decription:
             'This plant is one of the best plant. It grows in most of the regions in the world and can survive'
             'even the harshest weather condition.',
+        isSelected: false),
+    PlantModel(
+        plantId: 9,
+        price: 23.05,
+        category: 'Recommended',
+        plantName: 'Aningapara Plants',
+        size: 'Medium',
+        rating: 4.7,
+        humidity: 46,
+        temperature: '21 - 25',
+        imageURL: 'assets/Aningapara.png',
+        isFavorated: false,
+        decription:
+            'It is a tropical species that grows quickly and is easy to handle.',
+        isSelected: false),
+    PlantModel(
+        plantId: 10,
+        price: 21.90,
+        category: 'Recommended',
+        plantName: 'Imbé Plants',
+        size: 'Medium',
+        rating: 4.7,
+        humidity: 46,
+        temperature: '21 - 25',
+        imageURL: 'assets/Imbé.png',
+        isFavorated: false,
+        decription:
+            'Medium-sized that adapts to different regions, in addition to being very easy to grow. Wins over more and more people.',
+        isSelected: false),
+    PlantModel(
+        plantId: 11,
+        price: 46,
+        category: 'Recommended',
+        plantName: 'Zamioculca Plants',
+        size: 'Medium',
+        rating: 4.7,
+        humidity: 46,
+        temperature: '21 - 25',
+        imageURL: 'assets/Zamioculca.png',
+        isFavorated: false,
+        decription:
+            'Despite blooming in spring, it stays beautiful and green all year round.',
         isSelected: false),
   ];
 
