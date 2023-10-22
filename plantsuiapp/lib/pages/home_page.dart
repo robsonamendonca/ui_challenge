@@ -1,4 +1,6 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers, sized_box_for_whitespace
+// ignore_for_file: no_leading_underscores_for_local_identifiers, sized_box_for_whitespace, unused_field
+
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:plantsuiapp/constants.dart';
@@ -6,7 +8,6 @@ import 'package:plantsuiapp/models/plant-model.dart';
 import 'package:plantsuiapp/pages/detail_page.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:plantsuiapp/pages/onboarding_screen.dart';
-import 'package:plantsuiapp/pages/profile_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,12 +16,38 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+class Debouncer {
+  int? milliseconds;
+  VoidCallback? action;
+  Timer? timer;
+
+  run(VoidCallback action) {
+    if (null != timer) {
+      timer!.cancel();
+    }
+    timer = Timer(
+      const Duration(milliseconds: Duration.millisecondsPerSecond),
+      action,
+    );
+  }
+}
+
 class _HomePageState extends State<HomePage> {
+  List<PlantModel> _plantList = PlantModel.plantList;
+  List<PlantModel> _plantListFilter = [];
+  String labelResult = "";
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _plantListFilter = _plantList;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
-    List<PlantModel> _plantList = PlantModel.plantList;
 
     //Toggle Favorite button
     bool toggleIsFavorated(bool isFavorited) {
@@ -36,7 +63,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               _searchField(),
               const SizedBox(
-                height: 18,
+                height: 4,
               ),
               Container(
                 margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
@@ -159,6 +186,93 @@ class _HomePageState extends State<HomePage> {
           ),
         ));
   }
+
+  Container _searchField() {
+    final _debouncer = Debouncer();
+    return Container(
+      margin: const EdgeInsets.only(top: 40, left: 20, right: 20),
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+            color: const Color(0xff1D1617).withOpacity(0.05),
+            blurRadius: 40,
+            spreadRadius: 0.0)
+      ]),
+      child: Column(
+        children: [
+          TextField(
+            onChanged: (string) {
+              _debouncer.run(() {
+                setState(() {
+                  _plantList = _plantListFilter
+                      .where(
+                        (u) => (u.plantName.toLowerCase().contains(
+                              string.toLowerCase(),
+                            )),
+                      )
+                      .toList();
+                  labelResult = _plantList.isNotEmpty
+                      ? "Found ${_plantList.length} Results"
+                      : "";
+                  if (string.isEmpty) {
+                    _plantList = PlantModel.plantList;
+                    labelResult = "";
+                  }
+                });
+              });
+            },
+            decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                contentPadding: const EdgeInsets.all(15),
+                hintText: 'Search...',
+                hintStyle:
+                    TextStyle(color: Constants.primaryColor, fontSize: 14),
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: IconButton(
+                    icon: const Icon(Icons.search_sharp),
+                    onPressed: () => {},
+                  ),
+                ),
+                suffixIcon: Container(
+                  width: 100,
+                  child: IntrinsicHeight(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        VerticalDivider(
+                          color: Constants.primaryColor,
+                          indent: 10,
+                          endIndent: 10,
+                          thickness: 0.1,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: IconButton(
+                            icon: const Icon(Icons.tune),
+                            onPressed: () => {},
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide.none)),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Text(
+            labelResult,
+            style: const TextStyle(
+                color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 AppBar appBar(context) {
@@ -216,58 +330,5 @@ AppBar appBar(context) {
         ),
       ),
     ],
-  );
-}
-
-Container _searchField() {
-  return Container(
-    margin: const EdgeInsets.only(top: 40, left: 20, right: 20),
-    decoration: BoxDecoration(boxShadow: [
-      BoxShadow(
-          color: const Color(0xff1D1617).withOpacity(0.11),
-          blurRadius: 40,
-          spreadRadius: 0.0)
-    ]),
-    child: TextField(
-      decoration: InputDecoration(
-          filled: true,
-          fillColor: Colors.white,
-          contentPadding: const EdgeInsets.all(15),
-          hintText: 'Search...',
-          hintStyle: TextStyle(color: Constants.primaryColor, fontSize: 14),
-          prefixIcon: Padding(
-            padding: const EdgeInsets.all(12),
-            child: IconButton(
-              icon: const Icon(Icons.search_sharp),
-              onPressed: () => {},
-            ),
-          ),
-          suffixIcon: Container(
-            width: 100,
-            child: IntrinsicHeight(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  VerticalDivider(
-                    color: Constants.primaryColor,
-                    indent: 10,
-                    endIndent: 10,
-                    thickness: 0.1,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: IconButton(
-                      icon: const Icon(Icons.tune),
-                      onPressed: () => {},
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide.none)),
-    ),
   );
 }
