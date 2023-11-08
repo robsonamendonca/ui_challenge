@@ -30,7 +30,7 @@ https://lnkd.in/d6-jEC8V
     <a href="[https://castbox.fm/app/castbox/player/id5650324/id644570187?v=8.22.11&autoplay=0](https://www.linkedin.com/posts/robsonamendonca_desafioheyflutter-flutter-desenvolvimentodeaplicativos-activity-7121688728497979393-e32q?utm_source=share&utm_medium=member_desktop)https://www.linkedin.com/posts/robsonamendonca_desafioheyflutter-flutter-desenvolvimentodeaplicativos-activity-7121688728497979393-e32q?utm_source=share&utm_medium=member_desktop" alt="Linkedin">
 <img 
     src="./ui_challenge.gif"
-    width="400"
+    width="100%"
 />
         </a>
 </p>
